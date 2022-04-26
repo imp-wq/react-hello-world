@@ -1,8 +1,7 @@
 import React from 'react'
-import style from './style.module.css'
+import style from '@/05.Router/App'
 
 export default function app() {
-  console.log(style)
   return (
     <div className={style.box}>app</div>
   )
