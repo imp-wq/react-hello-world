@@ -1,11 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { HashRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import style from './active.module.css'
 
-const Films = () => {
+const Films = (props) => {
+  console.log(props)
   return (
     <div>
       <h2>Film组件</h2>
+      <FilmBox/>
       <Route path='/films/nowplaying' component={NowPlaying} />
       <Route path='/films/comingsoon' component={ComingSoon} />
       <Redirect from='/films' to='/films/nowplaying' />
@@ -53,6 +57,30 @@ const NotFound = () => {
   )
 }
 
+const FilmBox=()=>{
+  const id=4567
+  const history=useHistory()
+  console.log(history)
+  return (
+    <div>
+      <button onClick={()=>{
+        history.push({pathname:`/detail/${id}`,query:{id:123}})
+      }}>某部电影</button>
+    </div>
+  )
+}
+
+const Detail=(props)=>{
+  console.log(props.match.params.myID)
+  const params=useParams()
+  console.log(params.myID)
+  return (
+    <div>
+      <h2>Detail组件</h2>
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <>
@@ -60,20 +88,21 @@ export default function App() {
         <div>
           <ul>
             <li>
-              <NavLink to='/films'>电影</NavLink>
+              <NavLink to='/films' activeClassName={style.active}>电影</NavLink>
             </li>
             <li>
-              <NavLink to='/cinemas'>影院</NavLink>
+              <NavLink to='/cinemas' activeClassName={style.active}>影院</NavLink>
             </li>
             <li>
-              <NavLink to='/center'>个人中心</NavLink>
+              <NavLink to='/center' activeClassName={style.active}>个人中心</NavLink>
             </li>
           </ul>
         </div>
         <Switch>
-          <Route path='/films' component={Films} />
+          <Route path='/films' component={Films}/>
           <Route path='/cinemas' component={Cinemas} />
           <Route path='/center' component={Center} />
+          <Route path='/detail/:myID' component={Detail}/>
           {/* 加入exact进行精确匹配 */}
           <Redirect exact from='/' to='/films' />
           {/* 所有没被匹配到的，会展示404 */}
