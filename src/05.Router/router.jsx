@@ -70,7 +70,7 @@ const FilmBox=()=>{
   )
 }
 
-const Detail=(props)=>{
+const Detail=(props)=>{ 
   console.log(props.match.params.myID)
   const params=useParams()
   console.log(params.myID)
